@@ -9,7 +9,7 @@ const initAudio = () => {
   }
 };
 
-export const playSound = (type: 'success' | 'error' | 'win' | 'click') => {
+export const playSound = (type: 'success' | 'error' | 'win' | 'click' | 'meow') => {
   try {
     initAudio();
     if (!audioCtx) return;
@@ -58,6 +58,38 @@ export const playSound = (type: 'success' | 'error' | 'win' | 'click') => {
       gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
       osc.start(now);
       osc.stop(now + 0.05);
+    } else if (type === 'meow') {
+      // Simulate a meow sound
+      osc.type = 'sine'; // Starts as a pure tone
+      // Pitch slide up then down
+      osc.frequency.setValueAtTime(500, now);
+      osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+      osc.frequency.exponentialRampToValueAtTime(400, now + 0.6);
+
+      // Add a second oscillator for the 'roughness' of a meow
+      const osc2 = audioCtx.createOscillator();
+      const gain2 = audioCtx.createGain();
+      osc2.type = 'sawtooth';
+      osc2.frequency.setValueAtTime(500, now);
+      osc2.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+      osc2.frequency.exponentialRampToValueAtTime(400, now + 0.6);
+
+      osc2.connect(gain2);
+      gain2.connect(audioCtx.destination);
+
+      // Volume envelope (fade in and out)
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(0.3, now + 0.1);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+
+      gain2.gain.setValueAtTime(0, now);
+      gain2.gain.linearRampToValueAtTime(0.1, now + 0.1);
+      gain2.gain.exponentialRampToValueAtTime(0.01, now + 0.6);
+
+      osc.start(now);
+      osc.stop(now + 0.6);
+      osc2.start(now);
+      osc2.stop(now + 0.6);
     }
   } catch (e) {
     console.error('Audio play failed', e);

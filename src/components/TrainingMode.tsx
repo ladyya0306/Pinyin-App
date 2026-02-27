@@ -6,7 +6,7 @@ import { playSound } from '../audio';
 import { PlayMode } from './PlayMode';
 import { Word } from '../data';
 
-export const TrainingMode = ({ onBack }: { onBack: () => void }) => {
+export const TrainingMode = ({ grade, slotIndex, onBack }: { grade: number, slotIndex: 0 | 1, onBack: () => void }) => {
   const [isTraining, setIsTraining] = useState(false);
   const mistakes = getMistakes();
 
@@ -14,7 +14,7 @@ export const TrainingMode = ({ onBack }: { onBack: () => void }) => {
   const trainingWords: Word[] = Array.from(new Map(mistakes.map(m => [m.word.id, m.word])).values());
 
   if (isTraining) {
-    return <PlayMode onBack={() => setIsTraining(false)} trainingWords={trainingWords} />;
+    return <PlayMode grade={grade} slotIndex={slotIndex} onBack={() => setIsTraining(false)} trainingWords={trainingWords} />;
   }
 
   return (
@@ -36,9 +36,9 @@ export const TrainingMode = ({ onBack }: { onBack: () => void }) => {
         <div className="bg-orange-100 p-6 rounded-full">
           <AlertTriangle className="w-20 h-20 text-orange-500" />
         </div>
-        
+
         <h2 className="text-4xl font-bold text-slate-800">针对训练</h2>
-        
+
         <p className="text-xl text-slate-600 text-center max-w-md">
           系统将根据你的错题记录，为你量身定制专属的练习题目，帮助你攻克难关！
         </p>

@@ -6,7 +6,7 @@ import { playSound } from '../audio';
 import { speakAdvice } from '../utils';
 import Markdown from 'react-markdown';
 
-export const AdviceMode = ({ onBack }: { onBack: () => void }) => {
+export const AdviceMode = ({ grade, onBack }: { grade: number, onBack: () => void }) => {
   const [advice, setAdvice] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -38,14 +38,20 @@ export const AdviceMode = ({ onBack }: { onBack: () => void }) => {
 
         const mistakeDetails = mistakes.map(m => `${m.word.hanzi} (${m.word.pinyin}) 错选为 ${m.wrongAnswer}`).join(', ');
 
+        const gradeMap: Record<number, string> = {
+          1: '一年级', 2: '二年级', 3: '三年级',
+          4: '四年级', 5: '五年级', 6: '六年级'
+        };
+        const gradeStr = gradeMap[grade] || '小学';
+
         const prompt = `
-          以下是一个学生的拼音错题记录统计：
+          以下是一个${gradeStr}学生的拼音错题记录统计：
           ${Object.entries(mistakeSummary).map(([type, count]) => `${type}: 错了 ${count} 次`).join('\n')}
           
           具体的错题细节：
           ${mistakeDetails}
 
-          请根据这些错题，分析学生的不足之处，并给出具体、生动、适合一年级小朋友理解的学习建议。
+          请根据这些错题，分析学生的不足之处，并给出具体、生动、适合${gradeStr}小朋友理解的学习建议。
         `;
 
         const response = await fetch('https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions', {
@@ -60,7 +66,7 @@ export const AdviceMode = ({ onBack }: { onBack: () => void }) => {
             messages: [
               {
                 role: 'system',
-                content: '你是一个专业的小学语文老师，专门教一年级学生拼音。语气要充满元气、活泼、鼓励、亲切。使用Markdown格式，可以使用emoji。'
+                content: `你是一个专业的小学语文老师，专门教${gradeStr}学生拼音和生字。语气要充满元气、活泼、鼓励、亲切。使用Markdown格式，可以使用emoji。`
               },
               { role: 'user', content: prompt }
             ]
