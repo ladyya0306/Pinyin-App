@@ -36,7 +36,17 @@ const grade1Data = [
   "跳舞|tiào wǔ|💃", "跑步|pǎo bù|🏃", "游泳|yóu yǒng|🏊", "打球|dǎ qiú|🏀",
   "皮球|pí qiú|⚽", "篮球|lán qiú|🏀", "足球|zú qiú|⚽", "排球|pái qiú|🏐",
   "水果|shuǐ guǒ|🍎", "蔬菜|shū cài|🥬", "牛奶|niú nǎi|🥛", "面包|miàn bāo|🍞",
-  "米饭|mǐ fàn|🍚", "面条|miàn tiáo|🍜", "包子|bāo zi|🥟", "饺子|jiǎo zi|🥟"
+  "米饭|mǐ fàn|🍚", "面条|miàn tiáo|🍜", "包子|bāo zi|🥟", "饺子|jiǎo zi|🥟",
+  // 平翘舌音易混淆
+  "做梦|zuò mèng|💭", "走路|zǒu lù|🚶", "竹子|zhú zi|🎋", "种花|zhòng huā|🌷",
+  "操场|cāo chǎng|🏟️", "草地|cǎo dì|🌿", "窗户|chuāng hu|🪟", "出门|chū mén|🚪",
+  "散步|sàn bù|🚶", "色彩|sè cǎi|🎨", "时钟|shí zhōng|🕐", "沙子|shā zi|🏖️",
+  // 前后鼻音易混淆
+  "班长|bān zhǎng|👨‍🎓", "帮忙|bāng máng|🤝", "金鱼|jīn yú|🐠", "拼图|pīn tú|🧩",
+  "风筝|fēng zhēng|🪁", "灯笼|dēng lóng|🏮", "天亮|tiān liàng|🌅", "冰棍|bīng gùn|🍦",
+  // n/l混淆
+  "鸟巢|niǎo cháo|🪺", "年糕|nián gāo|🍡", "暖气|nuǎn qì|🌡️", "牛角|niú jiǎo|🐂",
+  "路口|lù kǒu|🚦", "绿叶|lǜ yè|🌿", "雷声|léi shēng|⚡", "凉水|liáng shuǐ|🥶"
 ];
 
 // 二年级
@@ -68,7 +78,17 @@ const grade2Data = [
   "早晚|zǎo wǎn|🌗", "真假|zhēn jiǎ|⚖️", "对错|duì cuò|❌", "好坏|hǎo huài|👍",
   "新旧|xīn jiù|✨", "冷热|lěng rè|🌡️", "干净|gān jìng|✨", "肮脏|āng zāng|🗑️",
   "安全|ān quán|🛡️", "危险|wēi xiǎn|⚠️", "简单|jiǎn dān|✅", "困难|kùn nán|🧗",
-  "快乐|kuài lè|😄", "悲伤|bēi shāng|😢", "勇敢|yǒng gǎn|🦸", "胆小|dǎn xiǎo|🐭"
+  "快乐|kuài lè|😄", "悲伤|bēi shāng|😢", "勇敢|yǒng gǎn|🦸", "胆小|dǎn xiǎo|🐭",
+  // 平翘舌音易混淆
+  "做操|zuò cāo|🤸", "杂技|zá jì|🎪", "自然|zì rán|🌿", "走失|zǒu shī|😰",
+  "珍贵|zhēn guì|💎", "整齐|zhěng qí|📐", "主角|zhǔ jué|🌟", "指南|zhǐ nán|🧭",
+  "词语|cí yǔ|📝", "从前|cóng qián|📖", "春节|chūn jié|🧨", "成长|chéng zhǎng|🌱",
+  "四季|sì jì|🗓️", "思考|sī kǎo|🤔", "松树|sōng shù|🌲", "速度|sù dù|⚡",
+  "神奇|shén qí|✨", "收获|shōu huò|🌾", "生长|shēng zhǎng|🌱", "手册|shǒu cè|📓",
+  // 前后鼻音易混淆
+  "感觉|gǎn jué|💭", "钢笔|gāng bǐ|🖊️", "信心|xìn xīn|💪", "影子|yǐng zi|👤",
+  // n/l混淆
+  "农村|nóng cūn|🌾", "年级|nián jí|📅", "练习|liàn xí|📝", "乐趣|lè qù|🎉"
 ];
 
 // 三年级
@@ -98,7 +118,17 @@ const grade3Data = [
   "迅速|xùn sù|⚡", "驯凉|xùn liáng|🦓", "询问|xún wèn|❓", "寻找|xún zhǎo|🔍",
   "巡逻|xún luó|🚓", "循环|xún huán|🔄", "遵守|zūn shǒu|🚦", "尊严|zūn yán|👑",
   "砖块|zhuān kuài|🧱", "专家|zhuān jiā|👨‍🔬", "转动|zhuǎn dòng|🔄", "传达|chuán dá|🗣️",
-  "传统|chuán tǒng|🏮", "船只|chuán zhī|🚢", "喘气|chuǎn qì|😮‍💨", "穿衣服|chuān yī fu|👕"
+  "传统|chuán tǒng|🏮", "船只|chuán zhī|🚢", "喘气|chuǎn qì|😮‍💨", "穿衣服|chuān yī fu|👕",
+  // 平翘舌音易混淆
+  "组长|zǔ zhǎng|👨‍🏫", "字典|zì diǎn|📖", "资料|zī liào|📄", "总结|zǒng jié|📋",
+  "庄稼|zhuāng jia|🌾", "桌椅|zhuō yǐ|🪑", "壮观|zhuàng guān|🏔️", "转弯|zhuǎn wān|↩️",
+  "粗心|cū xīn|😅", "催促|cuī cù|⏩", "超市|chāo shì|🛒", "船长|chuán zhǎng|🧑‍✈️",
+  "酸甜|suān tián|🍬", "随便|suí biàn|🤷", "山寨|shān zhài|🏯", "神仙|shén xiān|🧙",
+  // 前后鼻音易混淆
+  "担心|dān xīn|😟", "当然|dāng rán|✅", "品味|pǐn wèi|🍷", "平静|píng jìng|🧘",
+  "根本|gēn běn|🌳", "工程|gōng chéng|🏗️",
+  // n/l混淆
+  "泥巴|ní bā|🏖️", "旅游|lǚ yóu|🧳"
 ];
 
 // 四年级
@@ -130,7 +160,30 @@ const grade4Data = [
   "喝水|hē shuǐ|💧", "喝彩|hè cǎi|👏", "喝醉|hē zuì|🍺", "吆喝|yāo he|📢",
   "因为|yīn wèi|💡", "作为|zuò wéi|👤", "为了|wèi le|🎯", "为人|wéi rén|👥",
   "脏水|zāng shuǐ|💩", "心脏|xīn zàng|❤️", "弄脏|nòng zāng|🗑️", "五脏|wǔ zàng|🫀",
-  "背心|bèi xīn|🎽", "背包|bēi bāo|🎒", "背书|bèi shū|📖", "背着|bēi zhe|🚶"
+  "背心|bèi xīn|🎽", "背包|bēi bāo|🎒", "背书|bèi shū|📖", "背着|bēi zhe|🚶",
+  // 平翘舌音易混淆
+  "自信|zì xìn|💪", "造句|zào jù|✍️", "增加|zēng jiā|➕", "杂志|zá zhì|📰",
+  "占领|zhàn lǐng|🚩", "阵地|zhèn dì|🏰", "制造|zhì zào|🏭", "招待|zhāo dài|🤝",
+  "残忍|cán rěn|😈", "灿烂|càn làn|✨", "采访|cǎi fǎng|🎤", "操练|cāo liàn|🏋️",
+  "抵达|dǐ dá|📍", "丝绸|sī chóu|🧣", "思维|sī wéi|🧠", "碎片|suì piàn|💥",
+  "深浅|shēn qiǎn|📏", "手艺|shǒu yì|🎨", "闪亮|shǎn liàng|✨", "伸展|shēn zhǎn|🧘",
+  // 前后鼻音易混淆
+  "展览|zhǎn lǎn|🖼️", "战场|zhàn chǎng|⚔️", "奖章|jiǎng zhāng|🏅", "简单|jiǎn dān|✅",
+  // n/l混淆
+  "闹钟|nào zhōng|⏰", "理解|lǐ jiě|💡", "年龄|nián líng|📅", "力气|lì qì|💪",
+  // 易错题库导入：轻声词（四年级常见）
+  "扫帚|sào zhou|🧹", "清楚|qīng chu|🔍", "知识|zhī shi|📚", "算术|suàn shu|🔢",
+  "收拾|shōu shi|🧹", "消息|xiāo xi|📰", "规矩|guī ju|📐", "地道|dì dao|🛣️",
+  // 易错题库导入：日常多音字（四年级难度）
+  "亚洲|yà zhōu|🌏", "卑鄙|bēi bǐ|😤", "伎俩|jì liǎng|🤹", "悄然|qiǎo rán|🤫",
+  "颤栗|zhàn lì|😨", "奇数|jī shù|🔢", "关卡|guān qiǎ|🚧", "省悟|xǐng wù|💡",
+  "旋风|xuàn fēng|🌪️", "涨潮|zhǎng cháo|🌊", "弹力|tán lì|🪀", "相称|xiāng chèn|⚖️",
+  "缝纫机|féng rèn jī|🧵", "草率|cǎo shuài|🤷", "茶几|chá jī|☕",
+  // 易错题库导入：易读错词和成语
+  "搏击|bó jī|👊", "炮制|páo zhì|🧪", "威吓|wēi hè|⚠️",
+  "哄堂大笑|hōng táng dà xiào|😂", "以己度人|yǐ jǐ duó rén|🤔",
+  "差强人意|chā qiáng rén yì|😤", "无声无臭|wú shēng wú xiù|👃",
+  "调解|tiáo jiě|🤝", "弄脏|nòng zāng|🗑️", "胆小|dǎn xiǎo|🐭"
 ];
 
 // 五年级
@@ -142,7 +195,7 @@ const grade5Data = [
   "倔强|jué jiàng|😤", "强求|qiǎng qiú|🙏", "宁可|nìng kě|😤", "安宁|ān níng|🤫",
   "惩罚|chéng fá|⚖️", "乘车|chéng chē|🚌", "澄清|chéng qīng|💧", "呈现|chéng xiàn|🎁",
   "塑料|sù liào|🛍️", "塑造|sù zào|🗿", "溯源|sù yuán|🌊", "似乎|sì hū|🤔",
-  "档案|dàng àn|🗂️", "阻挡|zǔ dǎng|✋", "逮捕|dài bǔ|🚓", "拘捕|jū bǔ|牢",
+  "档案|dàng àn|🗂️", "阻挡|zǔ dǎng|✋", "逮捕|dài bǔ|🚓", "拘捕|jū bǔ|🔒",
   "记载|jì zǎi|📝", "下载|xià zǎi|⬇️", "怨声载道|yuàn shēng zài dào|🗣️", "混淆|hùn xiáo|🌪️",
   "比较|bǐ jiào|⚖️", "发酵|fā jiào|🍞", "酵母|jiào mǔ|🦠", "咆哮|páo xiào|🦁",
   "呼啸|hū xiào|🌪️", "细胞|xì bāo|🔬", "同胞|tóng bāo|👬", "拥抱|yōng bào|🤗",
@@ -159,7 +212,25 @@ const grade5Data = [
   "狙击|jū jī|🔫", "沮丧|jǔ sàng|😞", "阻击|zǔ jī|🛡️", "咀嚼|jǔ jué|👄",
   "编纂|biān zuǎn|✍️", "篡改|cuàn gǎi|📝", "赚钱|zhuàn qián|💰", "嫌怨|xián yuàn|😒",
   "谦虚|qiān xū|🙇", "歉意|qiàn yì|🙏", "赚钱|zhuàn qián|💰", "廉洁|lián jié|💎",
-  "竣工|jùn gōng|🏗️", "严峻|yán jùn|😠", "险峻|xiǎn jùn|⛰️", "俊俏|jùn qiào|✨"
+  "竣工|jùn gōng|🏗️", "严峻|yán jùn|😠", "险峻|xiǎn jùn|⛰️", "俊俏|jùn qiào|✨",
+  // 平翘舌音易混淆
+  "自私|zì sī|😒", "纯粹|chún cuì|💎", "阻碍|zǔ ài|⛔", "杂乱|zá luàn|🗑️",
+  "振奋|zhèn fèn|💪", "证实|zhèng shí|✅", "挖掘|wā jué|⛏️", "主张|zhǔ zhāng|📣",
+  "辞职|cí zhí|📋", "措施|cuò shī|🛠️", "厨师|chú shī|👨‍🍳", "充沛|chōng pèi|🔋",
+  "丝毫|sī háo|🔬", "手势|shǒu shì|🤚", "说服|shuō fú|🗣️", "梳头|shū tóu|💇",
+  // 前后鼻音易混淆
+  "辨别|biàn bié|🔍", "标兵|biāo bīng|🎖️", "芬芳|fēn fāng|🌸", "风波|fēng bō|🌊",
+  // n/l混淆
+  "内幕|nèi mù|🎭", "流畅|liú chàng|🌊", "弄巧|nòng qiǎo|🤹", "领悟|lǐng wù|💡",
+  // 易错多音字（来自易错题库）
+  "掂量|diān liang|⚖️", "嫉妒|jí dù|😤", "慰藉|wèi jiè|🙏", "连累|lián lěi|😢",
+  "给予|jǐ yǔ|🤲", "畸形|jī xíng|🏥", "标识|biāo zhì|🏷️", "一模一样|yì mú yí yàng|🪞",
+  "参差不齐|cēn cī bù qí|〰️", "呕心沥血|ǒu xīn lì xuè|❤️", "一曝十寒|yī pù shí hán|🌡️",
+  "大腹便便|dà fù pián pián|🤰", "心宽体胖|xīn kuān tǐ pán|😌",
+  "翘首|qiáo shǒu|👀", "奇葩|qī pā|🌺", "挑剔|tiāo tī|🔍", "字帖|zì tiè|📄",
+  "笨拙|bèn zhuō|🐢", "洁癖|jié pǐ|✨", "泯灭|mǐn miè|💔", "宁静|níng jìng|🤫",
+  "参差|cēn cī|〰️", "埋怨|mán yuàn|😒", "混水摸鱼|hún shuǐ mō yú|🐟",
+  "翻天覆地|fān tiān fù dì|🌍", "牵强附会|qiǎn qiǎng fù huì|🔗"
 ];
 
 // 六年级
@@ -190,7 +261,35 @@ const grade6Data = [
   "炽热|chì rè|🔥", "交织|jiāo zhī|🕸️", "旗帜|qí zhì|🚩", "识别|shí bié|👁️",
   "憧憬|chōng jǐng|💭", "瞳孔|tóng kǒng|👁️", "撞击|zhuàng jī|💥", "幢幢|chuáng chuáng|👻",
   "鬼鬼祟祟|guǐ guǐ suì suì|👻", "作祟|zuò suì|👻", "崇高|chóng gāo|🏔️", "崇拜|chóng bài|🙏",
-  "颠簸|diān bǒ|🌊", "巅峰|diān fēng|🏔️", "癫痫|diān xián|🏥", "大腹便便|dà fù pián pián|🤰"
+  "颠簸|diān bǒ|🌊", "巅峰|diān fēng|🏔️", "癫痫|diān xián|🏥", "大腹便便|dà fù pián pián|🤰",
+  // 平翘舌音易混淆
+  "遵从|zūn cóng|📜", "字符|zì fú|🔤", "组织|zǔ zhī|🧶", "综合|zōng hé|📊",
+  "忠诚|zhōng chéng|❤️", "治疗|zhì liáo|🏥", "主导|zhǔ dǎo|🎬", "质量|zhì liàng|💯",
+  "搏击|cá jī|👏", "残局|cán jú|♟️", "源泉|yuán quán|💧", "购买|gòu mǎi|🛒",
+  "撵取|sōng qǔ|📦", "缩小|suō xiǎo|🔍", "梦想|mèng xiǎng|💭", "颂扬|sòng yáng|🎤",
+  // 前后鼻音易混淆
+  "芬达|fēn dá|🌸", "风光|fēng guāng|☀️", "辰光|chén guāng|🌅", "沉没|chén mò|🌊",
+  // n/l混淆
+  "弄虞作假|nòng xū zuò jiǎ|🎭", "流离失所|liú lí shī suǒ|😢", "泥泊|ní pō|💧", "理论|lǐ lùn|📚",
+  // 高年级易错题库精选（多音字·成语·专有名词）
+  "揣摩|chuǎi mó|🤔", "刽子手|guì zǐ shǒu|⚔️", "友谊|yǒu yì|🤝",
+  "通缉|tōng jī|🚓", "投奔|tóu bèn|🏃", "蹊跷|qī qiāo|🤨",
+  "压轴|yā zhòu|🎭", "混水摸鱼|hún shuǐ mō yú|🐟", "一哄而散|yī hòng ér sàn|🏃",
+  "汗流浃背|hàn liú jiā bèi|💦", "龟裂|jūn liè|🏜️", "揩油|kāi yóu|😏",
+  "框架|kuàng jià|🏗️", "埋怨|mán yuàn|😒", "泯灭|mǐn miè|💔",
+  "莘莘学子|shēn shēn xué zǐ|👨‍🎓", "吞噬|tūn shì|🌑", "徇私|xùn sī|⚖️",
+  "自怨自艾|zì yuàn zì yì|😞", "号啕大哭|háo táo dà kū|😭", "引吭高歌|yǐn háng gāo gē|🎤",
+  "打烊|dǎ yàng|🔒", "执拗|zhí niù|😤", "薄荷|bò he|🌿",
+  "可恶|kě wù|😡", "倾轧|qīng yà|⚙️", "殷实|yīn shí|💰", "番茄|fān qié|🍅",
+  "扒手|pá shǒu|🧤", "屏气|bǐng qì|🫁", "弄堂|lòng táng|🏘️", "暴露|bào lù|👁️",
+  "湖泊|hú pō|🏞️", "思量|sī liáng|💭", "纷至沓来|fēn zhì tà lái|🌊", "曝光|bào guāng|📸",
+  "不省人事|bù xǐng rén shì|😵", "垂头丧气|chuí tóu sàng qì|😞", "挣扎|zhēng zhá|💪",
+  "传记|zhuàn jì|📖", "涨红|zhàng hóng|😳", "冠冕堂皇|guān miǎn táng huáng|👑",
+  "没收|mò shōu|🚫", "恐吓|kǒng hè|😱", "空闲|kòng xián|😌", "朝气|zhāo qì|☀️",
+  "句读|jù dòu|📖", "骨髓|gǔ suǐ|🦴", "单于|chán yú|🗡️", "吐蕃|tǔ bō|🏔️",
+  "复辟|fù bì|👑", "巷道|hàng dào|⛏️", "星宿|xīng xiù|⭐",
+  "附和|fù hè|🗣️", "度德量力|duó dé liàng lì|⚖️", "大腹便便|dà fù pián pián|🤰",
+  "参差不齐|cēn cī bù qí|〰️", "和稀泥|huò xī ní|🌊", "引吭高歌|yǐn háng gāo gē|🎤"
 ];
 
 const parseWords = (rawData: string[]): Word[] => {

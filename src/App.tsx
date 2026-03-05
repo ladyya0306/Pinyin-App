@@ -147,8 +147,8 @@ export default function App() {
 
           {/* Active Cat Mascot in Menu */}
           {activeCat && (
-            <div className="absolute top-4 right-4 z-50 flex flex-col items-end gap-2">
-              <div className="flex items-center gap-4 bg-white/60 p-2 rounded-2xl shadow-sm backdrop-blur-sm">
+            <div className="absolute top-4 right-4 z-50 flex flex-col items-end gap-2 pointer-events-none">
+              <div className="flex items-center gap-4 bg-white/60 p-2 rounded-2xl shadow-sm backdrop-blur-sm pointer-events-auto">
                 <div className="flex flex-col gap-1 text-sm font-bold w-24">
                   <div className="flex items-center gap-1 text-orange-500">
                     <Coffee className="w-4 h-4" />

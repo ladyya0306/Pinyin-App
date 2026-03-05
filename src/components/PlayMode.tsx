@@ -11,7 +11,7 @@ import { Cat, CatState, CatBreed } from './Cat';
 const ROUNDS_PER_GAME = 10;
 const CAT_BREEDS: CatBreed[] = ['orange', 'cow', 'calico', 'shorthair', 'ragdoll', 'devon'];
 
-type QuestionType = 'choose_pinyin' | 'complete_pinyin' | 'match_pairs';
+type QuestionType = 'choose_pinyin' | 'complete_pinyin';
 
 export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: number, slotIndex: 0 | 1, onBack: () => void, trainingWords?: Word[] }) => {
   const [currentWord, setCurrentWord] = useState<Word | null>(null);
@@ -34,18 +34,14 @@ export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: n
   const [displayPinyin, setDisplayPinyin] = useState('');
   const [correctChar, setCorrectChar] = useState('');
 
-  // For match_pairs
-  const [leftItems, setLeftItems] = useState<{ id: string, text: string, matched: boolean }[]>([]);
-  const [rightItems, setRightItems] = useState<{ id: string, text: string, matched: boolean }[]>([]);
-  const [selectedLeft, setSelectedLeft] = useState<string | null>(null);
-  const [selectedRight, setSelectedRight] = useState<string | null>(null);
+  // Removed match_pairs states
 
   const currentWords = useMemo(() => getWordsByGrade(grade), [grade]);
   const pool = trainingWords && trainingWords.length > 0 ? trainingWords : currentWords;
 
   const generateQuestion = () => {
     setCatState('expectant');
-    const types: QuestionType[] = ['choose_pinyin', 'complete_pinyin', 'match_pairs'];
+    const types: QuestionType[] = ['choose_pinyin', 'complete_pinyin'];
     const qType = types[Math.floor(Math.random() * types.length)];
     setQuestionType(qType);
 
@@ -77,18 +73,23 @@ export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: n
 
     if (qType === 'choose_pinyin') {
       const randomWord = pickUnseenWords(1)[0];
+      if (!randomWord) return;
       setCurrentWord(randomWord);
       let distractors = generateDistractors(randomWord.pinyin);
-      if (distractors.length < 3) {
+      // We want up to 6 options (1 correct + 5 distractors)
+      if (distractors.length < 5) {
+        // Pad with completely different pinyin if we don't have enough confusable ones
         const otherWords = currentWords.filter(w => w.id !== randomWord.id && !distractors.includes(w.pinyin));
-        const shuffledOthers = shuffle(otherWords).slice(0, 3 - distractors.length);
+        const shuffledOthers = shuffle(otherWords).slice(0, 5 - distractors.length);
         distractors = [...distractors, ...shuffledOthers.map(w => w.pinyin)];
       }
-      setOptions(shuffle([randomWord.pinyin, ...distractors.slice(0, 3)]));
-      setTimeout(() => speak(randomWord.hanzi), 500);
+      // Ensure exactly 6 options
+      setOptions(shuffle([randomWord.pinyin, ...distractors.slice(0, 5)]));
+      if (grade < 4) setTimeout(() => speak(randomWord.hanzi), 500);
     }
     else if (qType === 'complete_pinyin') {
       const randomWord = pickUnseenWords(1)[0];
+      if (!randomWord) return;
       setCurrentWord(randomWord);
 
       const words = randomWord.pinyin.split(' ');
@@ -149,48 +150,97 @@ export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: n
       opts.add(targetChar);
 
       if (dropStrategy === 1 && initial.length > 0) { // Distractors for initials
-        const initDistractors = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'z', 'c', 's', 'zh', 'ch', 'sh'];
+        const initDistractors = ['b', 'p', 'm', 'f', 'd', 't', 'n', 'l', 'g', 'k', 'h', 'j', 'q', 'x', 'z', 'c', 's', 'zh', 'ch', 'sh', 'y', 'w'];
+
+        // Shape and sound confusables
+        const addInitOpts = (from: string, tos: string[]) => {
+          if (targetChar === from) tos.forEach(t => opts.add(t));
+        };
+        addInitOpts('b', ['d', 'p', 'q']);
+        addInitOpts('d', ['b', 'p', 't', 'q']);
+        addInitOpts('p', ['q', 'b', 'd']);
+        addInitOpts('q', ['p', 'b', 'd', 'j']);
+        addInitOpts('m', ['n', 'w']);
+        addInitOpts('w', ['m', 'y', 'v']);
+        addInitOpts('n', ['l', 'm', 'h']);
+        addInitOpts('l', ['n', 'r', 'i']);
+        addInitOpts('f', ['t', 'h']);
+        addInitOpts('t', ['f', 'd']);
+        addInitOpts('h', ['f', 'n', 'k']);
+        addInitOpts('g', ['k', 'j', 'q']);
+        addInitOpts('k', ['g', 'h']);
+        addInitOpts('j', ['q', 'x', 'g', 'i']);
+        addInitOpts('x', ['s', 'sh', 'j', 'q']);
+        addInitOpts('r', ['l', 'y']);
+        addInitOpts('y', ['i', 'w', 'j', 'r']);
+
         if (targetChar === 'z') opts.add('zh'); else if (targetChar === 'zh') opts.add('z');
         if (targetChar === 'c') opts.add('ch'); else if (targetChar === 'ch') opts.add('c');
         if (targetChar === 's') opts.add('sh'); else if (targetChar === 'sh') opts.add('s');
-        if (targetChar === 'n') opts.add('l'); else if (targetChar === 'l') opts.add('n');
 
-        while (opts.size < 4) {
+        while (opts.size < 6) {
           opts.add(initDistractors[Math.floor(Math.random() * initDistractors.length)]);
         }
       } else if (dropStrategy === 2 && final.length > 0) { // Distractors for finals
         let baseTarget = targetChar.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        if (baseTarget.includes('in') && !baseTarget.includes('ing')) opts.add(targetChar.replace('n', 'ng'));
-        if (baseTarget.includes('ing')) opts.add(targetChar.replace('ng', 'n'));
-        if (baseTarget.includes('en') && !baseTarget.includes('eng')) opts.add(targetChar.replace('n', 'ng'));
-        if (baseTarget.includes('eng')) opts.add(targetChar.replace('ng', 'n'));
-        if (baseTarget.includes('an') && !baseTarget.includes('ang')) opts.add(targetChar.replace('n', 'ng'));
-        if (baseTarget.includes('ang')) opts.add(targetChar.replace('ng', 'n'));
-        if (baseTarget.includes('ui')) opts.add(targetChar.replace('ui', 'iu'));
-        if (baseTarget.includes('iu')) opts.add(targetChar.replace('iu', 'ui'));
-        if (baseTarget.includes('ie')) opts.add(targetChar.replace('ie', 'ei'));
-        if (baseTarget.includes('ei')) opts.add(targetChar.replace('ei', 'ie'));
+        // Helper to safely swap bases and inherit tone (approximated for distractors)
+        const addConfusableFinal = (fromBase: string, toBase: string) => {
+          if (baseTarget === fromBase || baseTarget.includes(fromBase)) {
+            // Just use toBase and pick a random char to bear the original tone if complex,
+            // but since it's just options, we can optionally strip tone or just use a simple mapping.
+            // Actually, a simple trick for distractors: just apply the tone mark from original.
+            const toneMatch = targetChar.match(/[\u0300-\u036f]/g) || targetChar.match(/[āáǎàōóǒòēéěèīíǐìūúǔùǖǘǚǜ]/);
+            let newOpt = toBase;
+            if (toneMatch) {
+              // Try to stick the tone onto the first vowel of the new base
+              const vowels = 'aeiouü';
+              for (let k = 0; k < newOpt.length; k++) {
+                if (vowels.includes(newOpt[k])) {
+                  // Very hacky tone applicator for distractors, just to look visually similar
+                  const toneMark = toneMatch[0];
+                  if (toneMark.length === 1 && toneMark.charCodeAt(0) > 255) { // already combined
+                    newOpt = newOpt.replace(newOpt[k], toneMark);
+                  } else { // combining mark
+                    newOpt = newOpt.substring(0, k + 1) + toneMark + newOpt.substring(k + 1);
+                  }
+                  break;
+                }
+              }
+            }
+            opts.add(newOpt);
+          }
+        };
+
+        addConfusableFinal('in', 'ing');
+        addConfusableFinal('ing', 'in');
+        addConfusableFinal('en', 'eng');
+        addConfusableFinal('eng', 'en');
+        addConfusableFinal('an', 'ang');
+        addConfusableFinal('ang', 'an');
+        addConfusableFinal('ui', 'iu');
+        addConfusableFinal('iu', 'ui');
+        addConfusableFinal('ie', 'ei');
+        addConfusableFinal('ei', 'ie');
+        addConfusableFinal('uo', 'ou');
+        addConfusableFinal('ou', 'uo');
+        addConfusableFinal('uo', 'o');
+        addConfusableFinal('o', 'uo');
+        addConfusableFinal('en', 'un');
+        addConfusableFinal('un', 'en');
 
         const commonFinals = ['a', 'o', 'e', 'i', 'u', 'ai', 'ei', 'ui', 'ao', 'ou', 'iu', 'ie', 'ue', 'er', 'an', 'en', 'in', 'un', 'ang', 'eng', 'ing', 'ong'];
-        while (opts.size < 4) {
+        while (opts.size < 6) {
           opts.add(commonFinals[Math.floor(Math.random() * commonFinals.length)]);
         }
       } else { // Distractors for single vowels
         const distractorVowels = 'āáǎàōóǒòēéěèīíǐìūúǔù';
-        while (opts.size < 4) {
+        while (opts.size < 6) {
           opts.add(distractorVowels[Math.floor(Math.random() * distractorVowels.length)]);
         }
       }
 
-      setOptions(shuffle(Array.from(opts)).slice(0, 4));
-      setTimeout(() => speak(randomWord.hanzi), 500);
-    }
-    else if (qType === 'match_pairs') {
-      const pairWords = pickUnseenWords(3);
-      setLeftItems(shuffle(pairWords.map(w => ({ id: w.id, text: w.hanzi, matched: false }))));
-      setRightItems(shuffle(pairWords.map(w => ({ id: w.id, text: w.pinyin, matched: false }))));
-      setSelectedLeft(null);
-      setSelectedRight(null);
+      setOptions(shuffle(Array.from(opts)).slice(0, 6));
+      if (grade < 4) setTimeout(() => speak(randomWord.hanzi), 500);
     }
 
     setWrongOption(null);
@@ -200,35 +250,7 @@ export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: n
     generateQuestion();
   }, []);
 
-  // Handle match pairs logic
-  useEffect(() => {
-    if (questionType === 'match_pairs' && selectedLeft && selectedRight) {
-      if (selectedLeft === selectedRight) {
-        playSound('success');
-        setCatState('happy');
-        setLeftItems(prev => prev.map(item => item.id === selectedLeft ? { ...item, matched: true } : item));
-        setRightItems(prev => prev.map(item => item.id === selectedRight ? { ...item, matched: true } : item));
-        setSelectedLeft(null);
-        setSelectedRight(null);
-
-        // Check if all matched
-        if (leftItems.filter(item => item.id !== selectedLeft && !item.matched).length === 0) {
-          handleCorrectAnswer();
-        } else {
-          setTimeout(() => setCatState('expectant'), 1000);
-        }
-      } else {
-        playSound('error');
-        setCatState('sad');
-        playKeepTrying();
-        setTimeout(() => {
-          setSelectedLeft(null);
-          setSelectedRight(null);
-          setCatState('expectant');
-        }, 1000);
-      }
-    }
-  }, [selectedLeft, selectedRight, questionType]);
+  // Handle match pairs logic removed
 
   const handleCorrectAnswer = () => {
     playSound('success');
@@ -480,60 +502,12 @@ export const PlayMode = ({ grade, slotIndex, onBack, trainingWords }: { grade: n
             </>
           )}
 
-          {questionType === 'match_pairs' && (
-            <div className="w-full flex flex-col items-center gap-6">
-              <h3 className="text-2xl font-bold text-slate-700 mb-2">连线匹配</h3>
-              <div className="flex justify-between w-full gap-4">
-                {/* Left Column (Hanzi) */}
-                <div className="flex flex-col gap-4 w-1/2">
-                  {leftItems.map(item => (
-                    <motion.button
-                      key={item.id}
-                      onClick={() => !item.matched && handleMatchClick('left', item.id)}
-                      className={`text-3xl py-4 rounded-2xl font-bold transition-all ${item.matched
-                        ? 'bg-green-100 text-green-600 border-2 border-green-300 opacity-50'
-                        : selectedLeft === item.id
-                          ? 'bg-sky-500 text-white shadow-lg scale-105'
-                          : 'bg-sky-50 text-sky-700 border-2 border-sky-200 hover:bg-sky-100'
-                        }`}
-                      disabled={item.matched}
-                    >
-                      {item.text}
-                    </motion.button>
-                  ))}
-                </div>
-
-                {/* Right Column (Pinyin) */}
-                <div className="flex flex-col gap-4 w-1/2">
-                  {rightItems.map(item => (
-                    <motion.button
-                      key={item.id}
-                      onClick={() => !item.matched && handleMatchClick('right', item.id)}
-                      className={`text-2xl py-4 rounded-2xl font-bold font-mono transition-all ${item.matched
-                        ? 'bg-green-100 text-green-600 border-2 border-green-300 opacity-50'
-                        : selectedRight === item.id
-                          ? 'bg-orange-500 text-white shadow-lg scale-105'
-                          : 'bg-orange-50 text-orange-700 border-2 border-orange-200 hover:bg-orange-100'
-                        }`}
-                      disabled={item.matched}
-                    >
-                      {item.text}
-                    </motion.button>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
+          {/* match_pairs UI removed */}
 
         </motion.div>
       </AnimatePresence>
     </div>
   );
 
-  function handleMatchClick(side: 'left' | 'right', id: string) {
-    if (gameOver || catState === 'happy' || catState === 'sad') return;
-    playSound('click');
-    if (side === 'left') setSelectedLeft(id);
-    else setSelectedRight(id);
-  }
+  // handleMatchClick removed
 };
